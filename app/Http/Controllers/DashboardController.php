@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return redirect()->route(Auth::user()->role === 'admin' ? 'admin.dashboard' : 'candidate.dashboard');
+        return redirect()->route( 'admin.dashboard' );
     }
 }
