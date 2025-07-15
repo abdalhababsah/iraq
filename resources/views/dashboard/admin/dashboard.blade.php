@@ -1,968 +1,324 @@
 @extends('dashboard.layouts.app')
 
 @section('content')
+<div class="page-content">
+    <div class="container-fluid">
 
-    <div class="page-content">
-        <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0 font-size-18">مرحباً بك في نظام إدارة الانتخابات</h4>
 
-            <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Welcome !</h4>
-
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Welcome !</li>
-                            </ol>
-                        </div>
-
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">الرئيسية</a></li>
+                            <li class="breadcrumb-item active">لوحة التحكم</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-            <!-- end page title -->
+        </div>
+        <!-- end page title -->
 
-            <div class="row">
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-h-100">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Sales</span>
-                                    <h4 class="mb-3">
-                                        $<span class="counter-value" data-target="354.5">0</span>k
-                                    </h4>
-                                    <div class="text-nowrap">
-                                        <span class="badge bg-success-subtle text-success">+$20.9k</span>
-                                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex-shrink-0 text-end dash-widget">
-                                    <div id="mini-chart1" data-colors='["--bs-primary", "--bs-success"]' class="apex-charts"></div>
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <!-- Total Candidates Card -->
+                <div class="card card-h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">إجمالي المرشحين</span>
+                                <h4 class="mb-3">
+                                    <span class="counter-value" data-target="{{ $totalCandidates }}">0</span>
+                                </h4>
+                                <div class="text-nowrap">
+                                    <span class="badge bg-primary-subtle text-primary">
+                                        <i class="mdi mdi-account-multiple me-1"></i>مرشح مسجل
+                                    </span>
                                 </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-h-100">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Items</span>
-                                    <h4 class="mb-3">
-                                        <span class="counter-value" data-target="1256">0</span>
-                                    </h4>
-                                    <div class="text-nowrap">
-                                        <span class="badge bg-danger-subtle text-danger">-29 Trades</span>
-                                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0 text-end dash-widget">
-                                    <div id="mini-chart2" data-colors='["--bs-primary", "--bs-success"]' class="apex-charts"></div>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col-->
-
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-h-100">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Average Sales</span>
-                                    <h4 class="mb-3">
-                                        $<span class="counter-value" data-target="7.54">0</span>M
-                                    </h4>
-                                    <div class="text-nowrap">
-                                        <span class="badge bg-success-subtle text-success">+ $2.8k</span>
-                                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0 text-end dash-widget">
-                                    <div id="mini-chart3" data-colors='["--bs-primary", "--bs-success"]' class="apex-charts"></div>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-h-100">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Order Delivery</span>
-                                    <h4 class="mb-3">
-                                        <span class="counter-value" data-target="18.34">0</span>%
-                                    </h4>
-                                    <div class="text-nowrap">
-                                        <span class="badge bg-success-subtle text-success">+5.32%</span>
-                                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0 text-end dash-widget">
-                                    <div id="mini-chart4" data-colors='["--bs-primary", "--bs-success"]' class="apex-charts"></div>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-            </div><!-- end row-->
-
-            <div class="row">
-                <div class="col-xl-8">
-                    <!-- card -->
-                    <div class="card">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex flex-wrap align-items-center mb-4">
-                                <h5 class="card-title me-2">Market Overview</h5>
-                                <div class="ms-auto">
-                                    <div>
-                                        <button type="button" class="btn btn-soft-primary btn-sm">
-                                            ALL
-                                        </button>
-                                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                                            1M
-                                        </button>
-                                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                                            6M
-                                        </button>
-                                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                                            1Y
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center">
-                                <div class="col-xl-8">
-                                    <div>
-                                        <div id="market-overview" data-colors='["--bs-primary", "--bs-success"]' class="apex-charts"></div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4">
-                                    <div class="p-4">
-                                        <div class="mt-0">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm m-auto">
-                                                    <span class="avatar-title rounded-circle bg-light text-dark font-size-13">
-                                                        1
-                                                    </span>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <span class="font-size-14">Mobile Phones</span>
-                                                </div>
-
-                                                <div class="flex-shrink-0">
-                                                    <span class="badge rounded-pill bg-success-subtle text-success  font-size-12 fw-medium">+5.4%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm m-auto">
-                                                    <span class="avatar-title rounded-circle bg-light text-dark font-size-13">
-                                                        2
-                                                    </span>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <span class="font-size-14">Smart Watch</span>
-                                                </div>
-
-                                                <div class="flex-shrink-0">
-                                                    <span class="badge rounded-pill bg-success-subtle text-success  font-size-12 fw-medium">+6.8%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm m-auto">
-                                                    <span class="avatar-title rounded-circle bg-light text-dark font-size-13">
-                                                        3
-                                                    </span>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <span class="font-size-14">Protable Acoustics</span>
-                                                </div>
-
-                                                <div class="flex-shrink-0">
-                                                    <span class="badge rounded-pill bg-danger-subtle text-danger  font-size-12 fw-medium">-4.9%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm m-auto">
-                                                    <span class="avatar-title rounded-circle bg-light text-dark font-size-13">
-                                                        4
-                                                    </span>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <span class="font-size-14">Smart Speakers</span>
-                                                </div>
-
-                                                <div class="flex-shrink-0">
-                                                    <span class="badge rounded-pill bg-success-subtle text-success  font-size-12 fw-medium">+3.5%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm m-auto">
-                                                    <span class="avatar-title rounded-circle bg-light text-dark font-size-13">
-                                                        5
-                                                    </span>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <span class="font-size-14">Camcorders</span>
-                                                </div>
-
-                                                <div class="flex-shrink-0">
-                                                    <span class="badge rounded-pill bg-danger-subtle text-danger  font-size-12 fw-medium">-0.3%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-4 pt-2">
-                                            <a href="" class="btn btn-primary w-100">See All Balances <i class="mdi mdi-arrow-right ms-1"></i></a>
-                                        </div>
-
-                                    </div>
+                            <div class="flex-shrink-0 text-end dash-widget">
+                                <div class="avatar-sm rounded-circle bg-primary-subtle">
+                                    <span class="avatar-title bg-primary-subtle text-primary rounded-circle font-size-24">
+                                        <i class="bx bx-group"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <!-- end card -->
                     </div>
-                    <!-- end col -->
                 </div>
-                <!-- end row-->
-
-                <div class="col-xl-4">
-                    <!-- card -->
-                    <div class="card">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="d-flex flex-wrap align-items-center mb-4">
-                                <h5 class="card-title me-2">Sales by Locations</h5>
-                                <div class="ms-auto">
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="text-muted font-size-12">Sort By:</span> <span class="fw-medium">World<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">Russia</a>
-                                            <a class="dropdown-item" href="#">Australia</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="sales-by-locations" data-colors='["--bs-success"]' style="height: 253px"></div>
-
-                            <div class="px-2 py-2">
-                                <p class="mb-1">USA <span class="float-end">75%</span></p>
-                                <div class="progress mt-2" style="height: 6px;">
-                                    <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="75">
-                                    </div>
-                                </div>
-
-                                <p class="mt-3 mb-1">Russia <span class="float-end">55%</span></p>
-                                <div class="progress mt-2" style="height: 6px;">
-                                    <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="55">
-                                    </div>
-                                </div>
-
-                                <p class="mt-3 mb-1">Australia <span class="float-end">85%</span></p>
-                                <div class="progress mt-2" style="height: 6px;">
-                                    <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="85">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end card body -->
-                    </div>
-                    <!-- end card -->
-                </div>
-                <!-- end col -->
             </div>
-            <!-- end row-->
 
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Customer List</h4>
-                            <div class="flex-shrink-0">
-                                <div class="dropdown">
-                                    <a class=" dropdown-toggle" href="#" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted">All Members<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                        <a class="dropdown-item" href="#">Members</a>
-                                        <a class="dropdown-item" href="#">New Members</a>
-                                        <a class="dropdown-item" href="#">Old Members</a>
-                                    </div>
+            <div class="col-xl-3 col-md-6">
+                <!-- Active Candidates Card -->
+                <div class="card card-h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">المرشحون النشطون</span>
+                                <h4 class="mb-3">
+                                    <span class="counter-value" data-target="{{ $activeCandidates }}">0</span>
+                                </h4>
+                                <div class="text-nowrap">
+                                    <span class="badge bg-success-subtle text-success">
+                                        <i class="mdi mdi-account-check me-1"></i>نشط
+                                    </span>
+                                    <span class="ms-1 text-muted font-size-13">
+                                        {{ $totalCandidates > 0 ? round(($activeCandidates / $totalCandidates) * 100, 1) : 0 }}% من الإجمالي
+                                    </span>
                                 </div>
                             </div>
-                        </div><!-- end card header -->
-
-                        <div class="card-body px-0">
-                            <div class="px-3" data-simplebar style="max-height: 386px;">
-                                <div class="d-flex align-items-center pb-4">
-                                    <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Randy Matthews</a></h5>
-                                        <span class="text-muted">Randy@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center pb-4">
-                                    <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Vernon Wood</a></h5>
-                                        <span class="text-muted">Vernon@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center pb-4">
-                                    <div class="avatar-md me-4">
-                                        <img src="{{ asset('dash/assets/images/users/avatar-5.jpg') }}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Howard Rhoades</a></h5>
-                                        <span class="text-muted">Howard@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center pb-4">
-                                    <div class="avatar-md me-4">
-                                        <img src="{{ asset('dash/assets/images/users/avatar-6.jpg') }}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Arthur Zurcher</a></h5>
-                                        <span class="text-muted">Arthur@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center pb-4">
-                                    <div class="avatar-md me-4">
-                                        <img src="{{ asset('dash/assets/images/users/avatar-8.jpg') }}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Angela Palmer</a></h5>
-                                        <span class="text-muted">Angela@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center pb-3">
-                                    <div class="avatar-md me-4">
-                                        <img src="{{ asset('dash/assets/images/users/avatar-9.jpg') }}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Dorothy Wimson</a></h5>
-                                        <span class="text-muted">Dorothy@gmail.com</span>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <div class="dropdown align-self-start">
-                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Copy</a>
-                                                <a class="dropdown-item" href="#">Save</a>
-                                                <a class="dropdown-item" href="#">Forward</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="flex-shrink-0 text-end dash-widget">
+                                <div class="avatar-sm rounded-circle bg-success-subtle">
+                                    <span class="avatar-title bg-success-subtle text-success rounded-circle font-size-24">
+                                        <i class="bx bx-user-check"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <!-- end card body -->
                     </div>
-                    <!-- end card -->
                 </div>
-                <!-- end col -->
+            </div>
 
-                <div class="col-xl-5">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Selling Products</h4>
-                            <div class="flex-shrink-0">
-                                <div class="dropdown align-self-start">
-                                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bx bx-dots-horizontal-rounded font-size-18 text-dark"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Copy</a>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Forward</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
+            <div class="col-xl-3 col-md-6">
+                <!-- Total Constituencies Card -->
+                <div class="card card-h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">الدوائر الانتخابية</span>
+                                <h4 class="mb-3">
+                                    <span class="counter-value" data-target="{{ $totalConstituencies ?? 0 }}">0</span>
+                                </h4>
+                                <div class="text-nowrap">
+                                    <span class="badge bg-info-subtle text-info">
+                                        <i class="mdi mdi-map-marker me-1"></i>دائرة انتخابية
+                                    </span>
                                 </div>
                             </div>
+                            <div class="flex-shrink-0 text-end dash-widget">
+                                <div class="avatar-sm rounded-circle bg-info-subtle">
+                                    <span class="avatar-title bg-info-subtle text-info rounded-circle font-size-24">
+                                        <i class="bx bx-map"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        </div><!-- end card header -->
+            <div class="col-xl-3 col-md-6">
+                <!-- Registration Rate Card -->
+                <div class="card card-h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate">التسجيلات الحديثة</span>
+                                <h4 class="mb-3">
+                                    <span class="counter-value" data-target="{{ $recentRegistrations ?? 0 }}">0</span>
+                                </h4>
+                                <div class="text-nowrap">
+                                    <span class="badge bg-warning-subtle text-warning">
+                                        <i class="mdi mdi-clock me-1"></i>هذا الأسبوع
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 text-end dash-widget">
+                                <div class="avatar-sm rounded-circle bg-warning-subtle">
+                                    <span class="avatar-title bg-warning-subtle text-warning rounded-circle font-size-24">
+                                        <i class="bx bx-trending-up"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <div class="card-body px-0 pt-2">
-                            <div class="table-responsive px-3" data-simplebar style="max-height: 395px;">
-                                <table class="table align-middle table-nowrap">
+        <!-- Recent Activity Section -->
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">أحدث المرشحين المسجلين</h4>
+                    </div>
+                    <div class="card-body">
+                        @if($recentCandidates && $recentCandidates->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-nowrap mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>المرشح</th>
+                                            <th>الدائرة الانتخابية</th>
+                                            <th>الكتلة/الحزب</th>
+                                            <th>الحالة</th>
+                                            <th>تاريخ التسجيل</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
+                                        @foreach($recentCandidates as $candidate)
                                         <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-1.png" class="img-fluid" alt="">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary-subtle text-primary">
+                                                            {{ substr($candidate->user->first_name, 0, 1) }}{{ substr($candidate->user->last_name, 0, 1) }}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-0">{{ $candidate->user->full_name }}</h6>
+                                                        <small class="text-muted">{{ $candidate->user->email }}</small>
+                                                    </div>
                                                 </div>
                                             </td>
-
                                             <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark">Half sleeve T-shirt</a></h5>
-                                                    <span class="text-muted">$240.00</span>
-                                                </div>
+                                                <span class="badge bg-light text-dark">
+                                                    {{ $candidate->constituency->name ?? 'غير محدد' }}
+                                                </span>
                                             </td>
-
+                                            <td>{{ $candidate->party_bloc_name }}</td>
                                             <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Available</a></p>
-                                                <span class="text-muted">243K</span>
+                                                @if($candidate->user->is_active)
+                                                    <span class="badge bg-success">نشط</span>
+                                                @else
+                                                    <span class="badge bg-danger">غير نشط</span>
+                                                @endif
                                             </td>
-
+                                            <td>{{ $candidate->created_at->diffForHumans() }}</td>
                                             <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">145 Sales</span>
-                                                </div>
+                                                <a href="{{ route('admin.candidates.show', $candidate) }}" 
+                                                   class="btn btn-outline-primary btn-sm">
+                                                    <i class="bx bx-show"></i>
+                                                </a>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-2.png" class="img-fluid" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark">Light blue T-shirt</a></h5>
-                                                    <span class="text-muted">$650.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Out Of Stock</a></p>
-                                                <span class="text-muted">1,253K</span>
-                                            </td>
-
-                                            <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bx-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">260 Sales</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-3.png" class="img-fluid" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark">Black Color T-shirt</a></h5>
-                                                    <span class="text-muted">$325.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Available</a></p>
-                                                <span class="text-muted">2,586K</span>
-                                            </td>
-
-                                            <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">220 Sales</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-4.png" class="img-fluid" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark"></a>Hoodie (Blue)</h5>
-                                                    <span class="text-muted">$170.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Available</a></p>
-                                                <span class="text-muted">4,565K</span>
-                                            </td>
-
-                                            <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">165 Sales</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-5.png" class="img-fluid" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark"></a>Half sleeve T-Shirt</h5>
-                                                    <span class="text-muted">$150.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Out Of Stock</a></p>
-                                                <span class="text-muted">5,265K</span>
-                                            </td>
-
-                                            <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bx-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">165 Sales</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 50px;">
-                                                <div class="avatar-md me-4">
-                                                    <img src="./assets/images/product/img-6.png" class="img-fluid" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    <h5 class="font-size-15"><a href="" class="text-dark"></a>Green color T-shirt</h5>
-                                                    <span class="text-muted">$120.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <p class="mb-1"><a href="" class="text-dark">Available</a></p>
-                                                <span class="text-muted">125K</span>
-                                            </td>
-
-                                            <td>
-                                                <div class="text-end">
-                                                    <ul class="mb-1 ps-0">
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bxs-star text-warning"></li>
-                                                        <li class="bx bx-star text-warning"></li>
-                                                    </ul>
-                                                    <span class="text-muted mt-1">165 Sales</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <!-- end card body -->
+                        @else
+                            <div class="text-center py-4">
+                                <i class="bx bx-user-plus font-size-48 text-muted"></i>
+                                <h5 class="mt-3">لا توجد تسجيلات حديثة</h5>
+                                <p class="text-muted">لم يتم تسجيل أي مرشحين مؤخراً</p>
+                            </div>
+                        @endif
                     </div>
-                    <!-- end card -->
                 </div>
-                <!-- end col -->
+            </div>
 
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Chat</h4>
-                            <div class="flex-shrink-0">
-                                <select class="form-select form-select-sm mb-0 my-n1">
-                                    <option value="Today" selected="">Today</option>
-                                    <option value="Yesterday">Yesterday</option>
-                                    <option value="Week">Last Week</option>
-                                    <option value="Month">Last Month</option>
-                                </select>
+            <div class="col-xl-4">
+                <!-- Quick Actions Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">الإجراءات السريعة</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{{ route('admin.candidates.index') }}" class="btn btn-primary">
+                                <i class="bx bx-list-ul me-2"></i>عرض جميع المرشحين
+                            </a>
+                            <a href="{{ route('admin.candidates.export') }}" class="btn btn-success">
+                                <i class="bx bx-download me-2"></i>تصدير قائمة المرشحين
+                            </a>
+                            <a href="{{ route('admin.candidates.download-template') }}" class="btn btn-info">
+                                <i class="bx bx-file me-2"></i>تحميل نموذج الاستيراد
+                            </a>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal">
+                                <i class="bx bx-upload me-2"></i>استيراد مرشحين جدد
+                            </button>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h6 class="font-size-14 mb-3">إحصائيات سريعة</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <h5 class="font-size-18 mb-1">{{ $totalCandidates - $activeCandidates }}</h5>
+                                    <p class="text-muted mb-0">غير نشط</p>
+                                </div>
                             </div>
-                        </div><!-- end card header -->
-
-                        <div class="card-body px-0">
-                            <div class="px-3 chat-conversation" data-simplebar style="max-height: 350px;">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="chat-day-title">
-                                        <span class="title">Today</span>
-                                    </li>
-                                    <li>
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:00 AM</span></div>
-                                                            <p class="mb-0">Good Morning</p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-
-                                    <li class="right">
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:02 AM</span></div>
-                                                            <p class="mb-0">Good morning</p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="">
-                                            </div>
-
-                                        </div>
-
-                                    </li>
-
-                                    <li>
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:04 AM</span></div>
-                                                            <p class="mb-0">
-                                                                Hi there, How are you?
-                                                            </p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:04 AM</span></div>
-                                                            <p class="mb-0">
-                                                                Waiting for your reply.As I heve to go back soon. i have to travel long distance.
-                                                            </p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-
-                                    <li class="right">
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:08 AM</span></div>
-                                                            <p class="mb-0">
-                                                                Hi, I am coming there in few minutes. Please wait!! I am in taxi right now.
-                                                            </p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="">
-                                            </div>
-                                        </div>
-
-                                    </li>
-
-                                    <li>
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:06 AM</span></div>
-                                                            <p class="mb-0">
-                                                                Thank You very much, I am waiting here at StarBuck cafe.
-                                                            </p>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-
-
-                                    <li>
-                                        <div class="conversation-list">
-                                            <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="">
-                                                <div class="flex-1">
-                                                    <div class="ctext-wrap">
-                                                        <div class="ctext-wrap-content">
-                                                            <div class="conversation-name"><span class="time">10:09 AM</span></div>
-                                                            <p class="mb-0">
-                                                                img-1.jpg & img-2.jpg images for a New Projects
-                                                            </p>
-
-                                                            <ul class="list-inline message-img mt-3  mb-0">
-                                                                <li class="list-inline-item message-img-list">
-                                                                    <a class="d-inline-block m-1" href="">
-                                                                        <img src="assets/images/small/img-1.jpg" alt="" class="rounded img-thumbnail">
-                                                                    </a>
-                                                                </li>
-
-                                                                <li class="list-inline-item message-img-list">
-                                                                    <a class="d-inline-block m-1" href="">
-                                                                        <img src="assets/images/small/img-2.jpg" alt="" class="rounded img-thumbnail">
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="dropdown align-self-start">
-                                                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy</a>
-                                                                <a class="dropdown-item" href="#">Save</a>
-                                                                <a class="dropdown-item" href="#">Forward</a>
-                                                                <a class="dropdown-item" href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="px-3">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control border bg-light-subtle" placeholder="Enter Message...">
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send float-end"></i></button>
-                                    </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <h5 class="font-size-18 mb-1">{{ $totalConstituencies ?? 0 }}</h5>
+                                    <p class="text-muted mb-0">دائرة انتخابية</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end card -->
                 </div>
-                <!-- end col -->
-            </div><!-- end row -->
-        </div>
-        <!-- container-fluid -->
-    </div>
 
+            </div>
+        </div>
+
+        <!-- Import Modal (Quick Access) -->
+        <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('admin.candidates.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="importModalLabel">استيراد مرشحين من ملف Excel</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="excel_file" class="form-label">اختر ملف Excel</label>
+                                <input type="file" class="form-control" id="excel_file" name="excel_file" 
+                                       accept=".xlsx,.xls,.csv" required>
+                                <div class="form-text">الصيغ المدعومة: .xlsx, .xls, .csv</div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="update_existing" name="update_existing" value="1">
+                                <label class="form-check-label" for="update_existing">
+                                    تحديث المرشحين الموجودين
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bx bx-upload me-1"></i>استيراد الملف
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- container-fluid -->
+</div>
+@endsection
+
+@section('scripts')
+<script>
+// Counter animation
+document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.counter-value');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60 FPS
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current);
+            }
+        }, 16);
+    });
+});
+</script>
 @endsection

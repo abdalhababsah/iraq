@@ -207,9 +207,13 @@
                             <p class="card-title-desc">إجمالي المرشحين: {{ $candidates->total() }}</p>
                         </div>
                         <div class="d-flex gap-2">
+                            <a href="{{ route('admin.candidates.create') }}" class="btn btn-primary">
+                                <i class="bx bx-plus"></i> إضافة مرشح جديد
+                            </a>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
                                 <i class="bx bx-upload"></i> استيراد ملف Excel
                             </button>
+
                             <a href="{{ route('admin.candidates.export') }}" class="btn btn-info">
                                 <i class="bx bx-download"></i> تصدير Excel
                             </a>

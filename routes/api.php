@@ -36,3 +36,7 @@ Route::group(['prefix' => 'candidates'], function () {
     // Get specific candidate by ID
     Route::get('/{id}', [CandidateController::class, 'show'])->name('api.candidates.show')->where('id', '[0-9]+');
 });
+
+Route::group(['prefix' => 'constituencies'], function () {
+    Route::get('/', [CandidateController::class, 'Constituencies'])->name('api.constituencies.index');
+});

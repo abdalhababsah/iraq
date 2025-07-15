@@ -7,6 +7,7 @@ use App\Http\Requests\Api\CandidateShowRequest;
 use App\Http\Resources\CandidateCollection;
 use App\Http\Resources\CandidateResource;
 use App\Models\Candidate;
+use App\Models\Constituency;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -335,4 +336,15 @@ public function store(CandidateStoreRequest $request)
         ], 500);
     }
 }
+
+public function Constituencies()
+{
+    $constituencies = Constituency::all();
+    return response()->json([
+        'success' => true,
+        'data' => $constituencies,
+    ]);
+}
+
+
 }
