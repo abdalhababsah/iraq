@@ -31,22 +31,25 @@ class CandidateController extends Controller
                     'message' => 'Candidate ID is required',
                 ], 400);
             }
-
+    
             if (!Candidate::where('id', $request->id)->exists()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Candidate not found',
                 ], 404);
             }
-
+    
             $candidate = Candidate::findOrFail($request->id);
             $candidate->load('user', 'constituency', 'education');
+            
+            // Transform image URLs
+            $candidate = $this->transformCandidateImages($candidate);
             
             return response()->json([
                 'success' => true,
                 'data' => $candidate,
             ]);
-
+    
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
@@ -70,27 +73,27 @@ class CandidateController extends Controller
             // Search functionality
             if ($request->filled('search') || $request->filled('q')) {
                 $searchTerm = $request->get('search') ?: $request->get('q');
-                
+
                 $query->where(function ($q) use ($searchTerm) {
                     // Search in user names
                     $q->whereHas('user', function ($userQuery) use ($searchTerm) {
                         $userQuery->where('first_name', 'like', "%{$searchTerm}%")
-                                  ->orWhere('last_name', 'like', "%{$searchTerm}%")
-                                  ->orWhere('email', 'like', "%{$searchTerm}%");
+                            ->orWhere('last_name', 'like', "%{$searchTerm}%")
+                            ->orWhere('email', 'like', "%{$searchTerm}%");
                     })
-                    // Search in candidate fields
-                    ->orWhere('party_bloc_name', 'like', "%{$searchTerm}%")
-                    ->orWhere('phone', 'like', "%{$searchTerm}%")
-                    ->orWhere('biography', 'like', "%{$searchTerm}%")
-                    ->orWhere('current_position', 'like', "%{$searchTerm}%")
-                    ->orWhere('campaign_slogan', 'like', "%{$searchTerm}%")
-                    ->orWhere('achievements', 'like', "%{$searchTerm}%")
-                    ->orWhere('experience', 'like', "%{$searchTerm}%")
-                    ->orWhere('skills', 'like', "%{$searchTerm}%")
-                    // Search in constituency
-                    ->orWhereHas('constituency', function ($constQuery) use ($searchTerm) {
-                        $constQuery->where('name', 'like', "%{$searchTerm}%");
-                    });
+                        // Search in candidate fields
+                        ->orWhere('party_bloc_name', 'like', "%{$searchTerm}%")
+                        ->orWhere('phone', 'like', "%{$searchTerm}%")
+                        ->orWhere('biography', 'like', "%{$searchTerm}%")
+                        ->orWhere('current_position', 'like', "%{$searchTerm}%")
+                        ->orWhere('campaign_slogan', 'like', "%{$searchTerm}%")
+                        ->orWhere('achievements', 'like', "%{$searchTerm}%")
+                        ->orWhere('experience', 'like', "%{$searchTerm}%")
+                        ->orWhere('skills', 'like', "%{$searchTerm}%")
+                        // Search in constituency
+                        ->orWhereHas('constituency', function ($constQuery) use ($searchTerm) {
+                            $constQuery->where('name', 'like', "%{$searchTerm}%");
+                        });
                 });
             }
 
@@ -124,12 +127,12 @@ class CandidateController extends Controller
                 if ($hasSocialLinks) {
                     $query->where(function ($q) {
                         $q->whereNotNull('facebook_link')
-                          ->orWhereNotNull('linkedin_link')
-                          ->orWhereNotNull('instagram_link')
-                          ->orWhereNotNull('twitter_link')
-                          ->orWhereNotNull('youtube_link')
-                          ->orWhereNotNull('tiktok_link')
-                          ->orWhereNotNull('website_link');
+                            ->orWhereNotNull('linkedin_link')
+                            ->orWhereNotNull('instagram_link')
+                            ->orWhereNotNull('twitter_link')
+                            ->orWhereNotNull('youtube_link')
+                            ->orWhereNotNull('tiktok_link')
+                            ->orWhereNotNull('website_link');
                     });
                 }
             }
@@ -140,8 +143,12 @@ class CandidateController extends Controller
 
             // Validate sort fields
             $allowedSortFields = [
-                'created_at', 'updated_at', 'party_bloc_name', 
-                'list_number', 'phone', 'constituency_id'
+                'created_at',
+                'updated_at',
+                'party_bloc_name',
+                'list_number',
+                'phone',
+                'constituency_id'
             ];
 
             if (in_array($sortBy, $allowedSortFields)) {
@@ -161,12 +168,16 @@ class CandidateController extends Controller
             }
 
             // Get results
+            // Get results
             if ($request->get('paginate', true) && $perPage !== 'all') {
                 $candidates = $query->paginate($perPage, ['*'], 'page', $page);
-                
+
+                // Transform image URLs
+                $transformedCandidates = $this->transformCandidatesCollection($candidates->items());
+
                 $response = [
                     'success' => true,
-                    'data' => $candidates->items(),
+                    'data' => $transformedCandidates,
                     'meta' => [
                         'pagination' => [
                             'total' => $candidates->total(),
@@ -189,10 +200,13 @@ class CandidateController extends Controller
             } else {
                 // Return all results without pagination
                 $candidates = $query->get();
-                
+
+                // Transform image URLs
+                $transformedCandidates = $this->transformCandidatesCollection($candidates);
+
                 $response = [
                     'success' => true,
-                    'data' => $candidates,
+                    'data' => $transformedCandidates,
                     'meta' => [
                         'total' => $candidates->count(),
                         'count' => $candidates->count(),
@@ -259,92 +273,140 @@ class CandidateController extends Controller
     }
 
 
-public function store(CandidateStoreRequest $request)
-{
-    try {
-        DB::beginTransaction();
+    public function store(CandidateStoreRequest $request)
+    {
+        try {
+            DB::beginTransaction();
 
-        // Create user
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password ?? '12345678'),
-            'role' => 'candidate',
-            'is_active' => true,
-            'email_verified_at' => now(),
-        ]);
+            // Create user
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password ?? '12345678'),
+                'role' => 'candidate',
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]);
 
-        // Prepare candidate data
-        $candidateData = $request->only([
-            'constituency_id', 'party_bloc_name', 'phone', 'biography',
-            'list_number', 'current_position', 'achievements', 'additional_info',
-            'experience', 'skills', 'campaign_slogan', 'voter_promises',
-            'facebook_link', 'linkedin_link', 'instagram_link', 'twitter_link',
-            'youtube_link', 'tiktok_link', 'website_link'
-        ]);
-        
-        $candidateData['user_id'] = $user->id;
+            // Prepare candidate data
+            $candidateData = $request->only([
+                'constituency_id',
+                'party_bloc_name',
+                'phone',
+                'biography',
+                'list_number',
+                'current_position',
+                'achievements',
+                'additional_info',
+                'experience',
+                'skills',
+                'campaign_slogan',
+                'voter_promises',
+                'facebook_link',
+                'linkedin_link',
+                'instagram_link',
+                'twitter_link',
+                'youtube_link',
+                'tiktok_link',
+                'website_link'
+            ]);
 
-        // Handle file uploads
-        if ($request->hasFile('profile_image')) {
-            $candidateData['profile_image'] = $request->file('profile_image')
-                ->store('candidates/profile-images', 'public');
-        }
+            $candidateData['user_id'] = $user->id;
 
-        if ($request->hasFile('profile_banner_image')) {
-            $candidateData['profile_banner_image'] = $request->file('profile_banner_image')
-                ->store('candidates/banner-images', 'public');
-        }
-
-        // Create candidate
-        $candidate = Candidate::create($candidateData);
-
-        // Create education records
-        if ($request->has('education')) {
-            foreach ($request->education as $education) {
-                $candidate->education()->create($education);
+            // Handle file uploads
+            if ($request->hasFile('profile_image')) {
+                $candidateData['profile_image'] = $request->file('profile_image')
+                    ->store('candidates/profile-images', 'public');
             }
+
+            if ($request->hasFile('profile_banner_image')) {
+                $candidateData['profile_banner_image'] = $request->file('profile_banner_image')
+                    ->store('candidates/banner-images', 'public');
+            }
+
+            // Create candidate
+            $candidate = Candidate::create($candidateData);
+
+            // Create education records
+            if ($request->has('education')) {
+                foreach ($request->education as $education) {
+                    $candidate->education()->create($education);
+                }
+            }
+
+            DB::commit();
+
+            // Load relationships
+            $candidate->load('user', 'constituency', 'education');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Candidate created successfully',
+                'data' => $candidate,
+            ], 201);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            // Clean up uploaded files on error
+            if (isset($candidateData['profile_image'])) {
+                Storage::disk('public')->delete($candidateData['profile_image']);
+            }
+            if (isset($candidateData['profile_banner_image'])) {
+                Storage::disk('public')->delete($candidateData['profile_banner_image']);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating candidate',
+                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error',
+            ], 500);
         }
+    }
 
-        DB::commit();
-
-        // Load relationships
-        $candidate->load('user', 'constituency', 'education');
-
+    public function Constituencies()
+    {
+        $constituencies = Constituency::all();
         return response()->json([
             'success' => true,
-            'message' => 'Candidate created successfully',
-            'data' => $candidate,
-        ], 201);
-
-    } catch (Exception $e) {
-        DB::rollBack();
-        
-        // Clean up uploaded files on error
-        if (isset($candidateData['profile_image'])) {
-            Storage::disk('public')->delete($candidateData['profile_image']);
-        }
-        if (isset($candidateData['profile_banner_image'])) {
-            Storage::disk('public')->delete($candidateData['profile_banner_image']);
-        }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Error creating candidate',
-            'error' => config('app.debug') ? $e->getMessage() : 'Internal server error',
-        ], 500);
+            'data' => $constituencies,
+        ]);
     }
-}
 
-public function Constituencies()
-{
-    $constituencies = Constituency::all();
-    return response()->json([
-        'success' => true,
-        'data' => $constituencies,
-    ]);
-}
+    /**
+     * Transform candidate data to include full image URLs
+     */
+    private function transformCandidateImages($candidate)
+    {
+        if (is_array($candidate) || is_object($candidate)) {
+            // Handle single candidate
+            if (isset($candidate->profile_image) && $candidate->profile_image) {
+                $candidate->profile_image = asset('storage/' . $candidate->profile_image);
+            }
 
+            if (isset($candidate->profile_banner_image) && $candidate->profile_banner_image) {
+                $candidate->profile_banner_image = asset('storage/' . $candidate->profile_banner_image);
+            }
 
+            return $candidate;
+        }
+
+        return $candidate;
+    }
+
+    /**
+     * Transform collection of candidates
+     */
+    private function transformCandidatesCollection($candidates)
+    {
+        if (is_array($candidates)) {
+            return array_map([$this, 'transformCandidateImages'], $candidates);
+        }
+
+        // Handle Laravel collection
+        return $candidates->map(function ($candidate) {
+            return $this->transformCandidateImages($candidate);
+        });
+    }
 }
