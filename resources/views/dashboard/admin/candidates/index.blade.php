@@ -426,9 +426,6 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
 <script>
 function confirmDelete(candidateId, candidateName) {
     document.getElementById('candidateName').textContent = candidateName;
@@ -482,12 +479,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Check file size (10MB limit)
-            if (file.size > 10 * 1024 * 1024) {
-                alert('حجم الملف كبير جداً. الحد الأقصى 10 ميجابايت');
-                e.target.value = '';
-                return;
-            }
         }
     });
 });
