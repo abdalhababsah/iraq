@@ -134,10 +134,10 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li><a class="dropdown-item" href="#"><i class="mdi mdi-share me-2"></i>مشاركة الملف</a></li>
                                         <li><a class="dropdown-item" href="#"><i class="mdi mdi-download me-2"></i>تحميل السيرة</a></li>
-                                        @if(auth()->user()->isAdmin())
+                                        {{-- @if(auth()->user()->isAdmin())
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item text-danger" href="#"><i class="mdi mdi-delete me-2"></i>حذف المرشح</a></li>
-                                        @endif
+                                        @endif --}}
                                     </ul>
                                 </div>
                             </div>
