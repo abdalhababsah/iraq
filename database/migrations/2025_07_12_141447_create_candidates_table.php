@@ -34,6 +34,13 @@ return new class extends Migration
             // Image fields
             $table->string('profile_image')->nullable(); // صورة الملف الشخصي
             $table->string('profile_banner_image')->nullable(); // صورة الغلاف
+            $table->string('facebook_link')->nullable(); // صورة الغلاف
+            $table->string('linkedin_link')->nullable(); // صورة الغلاف
+            $table->string('instagram_link')->nullable(); // صورة الغلاف
+            $table->string('twitter_link')->nullable(); // صورة الغلاف
+            $table->string('youtube_link')->nullable(); // صورة الغلاف
+            $table->string('tiktok_link')->nullable(); // صورة الغلاف
+            $table->string('website_link')->nullable(); // صورة الغلاف
             
             $table->timestamps();
         });

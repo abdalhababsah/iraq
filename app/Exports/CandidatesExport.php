@@ -62,9 +62,17 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
             $candidate->skills,
             $candidate->campaign_slogan,
             $candidate->voter_promises,
+            $candidate->facebook_link,
+            $candidate->linkedin_link,
+            $candidate->instagram_link,
+            $candidate->twitter_link,
+            $candidate->youtube_link,
+            $candidate->tiktok_link,
+            $candidate->website_link,
             $candidate->user->is_active ? 'نشط' : 'غير نشط',
             $candidate->created_at->format('Y-m-d H:i:s'),
             $candidate->updated_at->format('Y-m-d H:i:s'),
+
         ];
     }
 

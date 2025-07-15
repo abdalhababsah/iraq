@@ -33,6 +33,13 @@ class CandidatesTemplateExport implements FromArray, WithHeadings, WithStyles, W
                 'التفاوض، القيادة، حل النزاعات',
                 'معًا نحو مستقبل أفضل',
                 'تحسين الخدمات الحكومية وحماية حقوق المواطنين',
+                'https://www.facebook.com/fatima.hsn',
+                'https://www.linkedin.com/in/fatima-hsn',
+                'https://www.instagram.com/fatima.hsn',
+                'https://www.twitter.com/fatima.hsn',
+                'https://www.youtube.com/fatima.hsn',
+                'https://www.tiktok.com/fatima.hsn',
+                'https://www.fatima.hsn.com',
                 1
             ],
             [
@@ -52,6 +59,13 @@ class CandidatesTemplateExport implements FromArray, WithHeadings, WithStyles, W
                 'البحث العلمي، التحليل الاقتصادي، الإدارة',
                 'اقتصاد قوي لمستقبل مزدهر',
                 'تطوير القطاع الاقتصادي وخلق فرص عمل للشباب',
+                'https://www.facebook.com/ali.hsn',
+                'https://www.linkedin.com/in/ali-hsn',
+                'https://www.instagram.com/ali.hsn',
+                'https://www.twitter.com/ali.hsn',
+                'https://www.youtube.com/ali.hsn',
+                'https://www.tiktok.com/ali.hsn',
+                'https://www.ali.hsn.com',
                 1
             ],
             [
@@ -71,6 +85,13 @@ class CandidatesTemplateExport implements FromArray, WithHeadings, WithStyles, W
                 'إدارة المشاريع، التخطيط العمراني، القيادة',
                 'إعادة البناء والتطوير',
                 'إعادة إعمار المناطق المتضررة وتوفير الخدمات الأساسية',
+                'https://www.facebook.com/ali.hsn',
+                'https://www.linkedin.com/in/ali-hsn',
+                'https://www.instagram.com/ali.hsn',
+                'https://www.twitter.com/ali.hsn',
+                'https://www.youtube.com/ali.hsn',
+                'https://www.tiktok.com/ali.hsn',
+                'https://www.ali.hsn.com',
                 1
             ]
         ];
@@ -95,6 +116,13 @@ class CandidatesTemplateExport implements FromArray, WithHeadings, WithStyles, W
             'skills',
             'campaign_slogan',
             'voter_promises',
+            'facebook_link',
+            'linkedin_link',
+            'instagram_link',
+            'twitter_link',
+            'youtube_link',
+            'tiktok_link',
+            'website_link',
             'is_active'
         ];
     }
@@ -161,7 +189,14 @@ class CandidatesTemplateExport implements FromArray, WithHeadings, WithStyles, W
             'N' => 20, // skills
             'O' => 25, // campaign_slogan
             'P' => 30, // voter_promises
-            'Q' => 15, // is_active
+            'Q' => 15, // facebook_link
+            'R' => 15, // linkedin_link
+            'S' => 15, // instagram_link
+            'T' => 15, // twitter_link
+            'U' => 15, // youtube_link
+            'V' => 15, // tiktok_link
+            'W' => 15, // website_link
+            'X' => 15, // is_active
         ];
     }
 }

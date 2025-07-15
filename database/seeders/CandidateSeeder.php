@@ -32,6 +32,15 @@ class CandidateSeeder extends Seeder
                     'biography' => 'محامي وناشط سياسي، عمل في مجال حقوق الإنسان لأكثر من 15 عامًا.',
                     'current_position' => 'محامي ومستشار قانوني',
                     'campaign_slogan' => 'معًا نحو مستقبل أفضل',
+                    'profile_image' => null,
+                    'profile_banner_image' => null,
+                    'facebook_link' => 'https://www.facebook.com/ahmed.hsn',
+                    'linkedin_link' => 'https://www.linkedin.com/in/ahmed.hsn',
+                    'instagram_link' => 'https://www.instagram.com/ahmed.hsn',
+                    'twitter_link' => 'https://www.twitter.com/ahmed.hsn',
+                    'youtube_link' => 'https://www.youtube.com/ahmed.hsn',
+                    'tiktok_link' => 'https://www.tiktok.com/ahmed.hsn',
+                    'website_link' => 'https://www.ahmed.hsn.com', 
                 ],
                 'education' => [
                     [
@@ -65,6 +74,15 @@ class CandidateSeeder extends Seeder
                     'biography' => 'أستاذة جامعية ومتخصصة في الاقتصاد، عملت في العديد من المشاريع التنموية.',
                     'current_position' => 'أستاذة جامعية - كلية الاقتصاد',
                     'campaign_slogan' => 'اقتصاد قوي لمستقبل مزدهر',
+                    'profile_image' => null,
+                    'profile_banner_image' => null,
+                    'facebook_link' => 'https://www.facebook.com/fatima.hsn',
+                    'linkedin_link' => 'https://www.linkedin.com/in/fatima.hsn',
+                    'instagram_link' => 'https://www.instagram.com/fatima.hsn',
+                    'twitter_link' => 'https://www.twitter.com/fatima.hsn',
+                    'youtube_link' => 'https://www.youtube.com/fatima.hsn',
+                    'tiktok_link' => 'https://www.tiktok.com/fatima.hsn',
+                    'website_link' => 'https://www.fatima.hsn.com', 
                 ],
                 'education' => [
                     [
@@ -105,6 +123,15 @@ class CandidateSeeder extends Seeder
                     'biography' => 'مهندس ورجل أعمال، ساهم في إعادة إعمار المناطق المتضررة في نينوى.',
                     'current_position' => 'مدير شركة الإعمار والتطوير',
                     'campaign_slogan' => 'إعادة البناء والتطوير',
+                    'profile_image' => null,
+                    'profile_banner_image' => null,
+                    'facebook_link' => 'https://www.facebook.com/ali.hsn',
+                    'linkedin_link' => 'https://www.linkedin.com/in/ali.hsn',
+                    'instagram_link' => 'https://www.instagram.com/ali.hsn',
+                    'twitter_link' => 'https://www.twitter.com/ali.hsn',
+                    'youtube_link' => 'https://www.youtube.com/ali.hsn',
+                    'tiktok_link' => 'https://www.tiktok.com/ali.hsn',
+                    'website_link' => 'https://www.ali.hsn.com',
                 ],
                 'education' => [
                     [

@@ -163,10 +163,6 @@ class CandidateController extends Controller
 
     public function deleteEducation(Education $education)
     {
-        // Check if the education belongs to the authenticated candidate
-        if ($education->candidate_id !== auth()->user()->candidate->id) {
-            abort(403, 'غير مخول للوصول');
-        }
 
         $education->delete();
         

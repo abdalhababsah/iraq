@@ -1,0 +1,634 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "Candidates API - مجموعة API المرشحين",
+		"description": "مجموعة API شاملة لإدارة المرشحين في النظام الانتخابي\n\n**الميزات المتوفرة:**\n- عرض قائمة المرشحين مع التصفية والبحث\n- إنشاء مرشح جديد مع الصور والمؤهلات العلمية\n- عرض تفاصيل مرشح محدد\n\n**ملاحظات مهمة:**\n- جميع الـ API endpoints تعمل بدون authentication حالياً\n- الصور يتم رفعها كـ multipart/form-data\n- البيانات المرجعة بصيغة JSON\n- التواريخ بصيغة ISO 8601",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. قائمة المرشحين - Get All Candidates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "نوع البيانات المطلوب استلامها"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/candidates?search=أحمد&constituency_id=1&party_bloc_name=الديمقراطي&has_education=true&sort_by=created_at&sort_order=desc&per_page=15&page=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"candidates"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "أحمد",
+							"description": "البحث العام - يبحث في: الاسم الأول، الاسم الأخير، البريد الإلكتروني، اسم الحزب، الهاتف، السيرة الذاتية، المنصب الحالي، شعار الحملة، الإنجازات، الخبرة، المهارات، اسم الدائرة الانتخابية"
+						},
+						{
+							"key": "q",
+							"value": "",
+							"description": "بديل لـ search - نفس الوظيفة",
+							"disabled": true
+						},
+						{
+							"key": "constituency_id",
+							"value": "1",
+							"description": "معرف الدائرة الانتخابية - رقم صحيح"
+						},
+						{
+							"key": "party_bloc_name",
+							"value": "الديمقراطي",
+							"description": "اسم الحزب أو الكتلة - بحث جزئي"
+						},
+						{
+							"key": "list_number",
+							"value": "",
+							"description": "رقم القائمة - رقم صحيح",
+							"disabled": true
+						},
+						{
+							"key": "has_education",
+							"value": "true",
+							"description": "المرشحين الذين لديهم مؤهلات علمية - true أو false"
+						},
+						{
+							"key": "has_social_links",
+							"value": "",
+							"description": "المرشحين الذين لديهم روابط مواقع تواصل - true أو false",
+							"disabled": true
+						},
+						{
+							"key": "sort_by",
+							"value": "created_at",
+							"description": "ترتيب حسب: created_at, updated_at, party_bloc_name, list_number, phone, constituency_id"
+						},
+						{
+							"key": "sort_order",
+							"value": "desc",
+							"description": "اتجاه الترتيب: asc (تصاعدي) أو desc (تنازلي)"
+						},
+						{
+							"key": "per_page",
+							"value": "15",
+							"description": "عدد النتائج في الصفحة (1-100) أو 'all' لجميع النتائج"
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"description": "رقم الصفحة - يبدأ من 1"
+						},
+						{
+							"key": "paginate",
+							"value": "",
+							"description": "تفعيل التقسيم إلى صفحات - true أو false (افتراضي: true)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "**وصف الـ API:**\nيسترجع قائمة بجميع المرشحين النشطين مع إمكانيات بحث وتصفية متقدمة.\n\n**المعاملات المتوفرة:**\n\n🔍 **البحث:**\n- `search` أو `q`: البحث العام في جميع حقول المرشح\n\n🎯 **التصفية:**\n- `constituency_id`: معرف الدائرة الانتخابية\n- `party_bloc_name`: اسم الحزب/الكتلة (بحث جزئي)\n- `list_number`: رقم القائمة\n- `has_education`: true/false للمرشحين مع مؤهلات علمية\n- `has_social_links`: true/false للمرشحين مع روابط تواصل\n\n📊 **الترتيب:**\n- `sort_by`: الحقل المراد الترتيب حسبه\n- `sort_order`: asc أو desc\n\n📄 **التقسيم:**\n- `per_page`: عدد النتائج في الصفحة\n- `page`: رقم الصفحة\n- `paginate`: تفعيل/إلغاء التقسيم\n\n**أمثلة على الاستخدام:**\n```\n# البحث عن مرشح بالاسم\n?search=أحمد\n\n# مرشحي دائرة معينة مع ترتيب\n?constituency_id=1&sort_by=party_bloc_name&sort_order=asc\n\n# المرشحين الذين لديهم مؤهلات علمية\n?has_education=true&per_page=25\n\n# بحث متقدم\n?search=مهندس&constituency_id=2&has_social_links=true\n```"
+			},
+			"response": [
+				{
+					"name": "استجابة ناجحة - Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/candidates?per_page=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"user_id\": 1,\n            \"constituency_id\": 1,\n            \"party_bloc_name\": \"الحزب الديمقراطي الأردني\",\n            \"phone\": \"+962791234567\",\n            \"biography\": \"مهندس مدني خبرة 15 سنة في مجال البناء والتطوير العمراني، خدمت المجتمع المحلي من خلال مشاريع تطوعية متعددة\",\n            \"list_number\": 1,\n            \"current_position\": \"مدير عام شركة الإنشاءات المتقدمة\",\n            \"achievements\": \"- تنفيذ أكثر من 50 مشروع سكني\\n- رئيس جمعية المهندسين المحلية\\n- جائزة أفضل مهندس لعام 2023\",\n            \"experience\": \"15 سنة في الهندسة المدنية، 5 سنوات في الإدارة التنفيذية\",\n            \"skills\": \"إدارة المشاريع، التخطيط العمراني، القيادة، التفاوض\",\n            \"campaign_slogan\": \"معاً نبني مستقبل أفضل\",\n            \"voter_promises\": \"تطوير البنية التحتية، دعم الشباب، تحسين الخدمات العامة\",\n            \"profile_image\": \"candidates/profile-images/candidate1.jpg\",\n            \"profile_banner_image\": \"candidates/banner-images/banner1.jpg\",\n            \"facebook_link\": \"https://facebook.com/ahmad.candidate\",\n            \"linkedin_link\": \"https://linkedin.com/in/ahmad-engineer\",\n            \"instagram_link\": \"https://instagram.com/ahmad_candidate\",\n            \"twitter_link\": \"https://twitter.com/ahmad_candidate\",\n            \"youtube_link\": null,\n            \"tiktok_link\": null,\n            \"website_link\": \"https://ahmad-candidate.com\",\n            \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"first_name\": \"أحمد\",\n                \"last_name\": \"محمد علي\",\n                \"email\": \"ahmad.mohamed@example.com\",\n                \"role\": \"candidate\",\n                \"is_active\": true,\n                \"created_at\": \"2024-01-15T10:30:00.000000Z\"\n            },\n            \"constituency\": {\n                \"id\": 1,\n                \"name\": \"الدائرة الأولى - عمان\",\n                \"description\": \"تشمل مناطق: الدوار الأول، الدوار الثاني، وسط البلد\"\n            },\n            \"education\": [\n                {\n                    \"id\": 1,\n                    \"degree\": \"بكالوريوس هندسة مدنية\",\n                    \"institution\": \"الجامعة الأردنية\",\n                    \"field_of_study\": \"الهندسة المدنية\",\n                    \"start_year\": 2005,\n                    \"end_year\": 2009,\n                    \"description\": \"تخرجت بتقدير جيد جداً\"\n                },\n                {\n                    \"id\": 2,\n                    \"degree\": \"ماجستير إدارة أعمال\",\n                    \"institution\": \"جامعة الشرق الأوسط\",\n                    \"field_of_study\": \"إدارة المشاريع\",\n                    \"start_year\": 2015,\n                    \"end_year\": 2017,\n                    \"description\": \"تخصص في إدارة المشاريع الكبرى\"\n                }\n            ]\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 25,\n            \"count\": 2,\n            \"per_page\": 2,\n            \"current_page\": 1,\n            \"last_page\": 13,\n            \"from\": 1,\n            \"to\": 2\n        },\n        \"links\": {\n            \"first\": \"http://localhost/api/candidates?page=1\",\n            \"last\": \"http://localhost/api/candidates?page=13\",\n            \"prev\": null,\n            \"next\": \"http://localhost/api/candidates?page=2\"\n        }\n    },\n    \"filters_applied\": {\n        \"per_page\": \"2\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "2. إنشاء مرشح جديد - Create New Candidate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "نوع البيانات المطلوب استلامها"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "فاطمة",
+							"description": "الاسم الأول - مطلوب",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "أحمد الزهراني",
+							"description": "الاسم الأخير - مطلوب",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "fatima.alzahrani@example.com",
+							"description": "البريد الإلكتروني - مطلوب ويجب أن يكون فريد",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"description": "كلمة المرور - مطلوب، 8 أحرف على الأقل",
+							"type": "text"
+						},
+						{
+							"key": "constituency_id",
+							"value": "2",
+							"description": "معرف الدائرة الانتخابية - مطلوب، يجب أن يكون موجود في جدول constituencies",
+							"type": "text"
+						},
+						{
+							"key": "party_bloc_name",
+							"value": "كتلة المرأة والشباب",
+							"description": "اسم الحزب أو الكتلة أو الائتلاف - مطلوب",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "+962795432109",
+							"description": "رقم الهاتف أو الواتساب - مطلوب",
+							"type": "text"
+						},
+						{
+							"key": "biography",
+							"value": "طبيبة أطفال مختصة بخبرة 12 سنة، عملت في المستشفيات الحكومية والخاصة، ناشطة في مجال حقوق المرأة والطفل، حاصلة على عدة جوائز في مجال الطب والعمل الاجتماعي. أؤمن بأهمية التعليم والصحة كحقوق أساسية لجميع المواطنين.",
+							"description": "السيرة الذاتية أو التعريف بالنفس - مطلوب",
+							"type": "text"
+						},
+						{
+							"key": "list_number",
+							"value": "3",
+							"description": "رقم القائمة أو الكتلة - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "current_position",
+							"value": "رئيسة قسم طب الأطفال - مستشفى الملك حسين",
+							"description": "المنصب الحالي أو السابق أو العشائري - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "achievements",
+							"value": "- جائزة أفضل طبيبة أطفال 2022\\n- رئيسة الجمعية الطبية النسائية\\n- نشر 15 بحث علمي في مجلات دولية\\n- تأسيس عيادة مجانية للأطفال الأيتام\\n- تدريب أكثر من 100 طبيب شاب",
+							"description": "إنجازات المرشح - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "additional_info",
+							"value": "متطوعة في عدة جمعيات خيرية، عضو في اللجنة الاستشارية لحقوق الطفل، متحدثة في مؤتمرات طبية دولية",
+							"description": "معلومات إضافية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "experience",
+							"value": "- 12 سنة طبيبة أطفال\\n- 5 سنوات في الإدارة الطبية\\n- 3 سنوات في البحث العلمي\\n- 8 سنوات في العمل التطوعي",
+							"description": "الخبرة العملية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "skills",
+							"value": "طب الأطفال، الإدارة الطبية، البحث العلمي، التدريب، القيادة، العمل الجماعي، اللغة الإنجليزية، استخدام التكنولوجيا الطبية",
+							"description": "المهارات - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "campaign_slogan",
+							"value": "صحة أطفالنا مسؤوليتنا جميعاً",
+							"description": "شعار الحملة الانتخابية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "voter_promises",
+							"value": "- تطوير الخدمات الصحية للأطفال\\n- إنشاء مراكز رعاية أمومة وطفولة\\n- برامج توعية صحية مجانية\\n- دعم الأسر ذات الدخل المحدود\\n- تطوير التعليم في المدارس الحكومية",
+							"description": "ماذا ستقدم للناخبين - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "profile_image",
+							"description": "صورة الملف الشخصي - اختياري، أقصى حجم 2MB، أنواع مقبولة: jpeg,png,jpg,gif",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "profile_banner_image",
+							"description": "صورة الغلاف - اختياري، أقصى حجم 5MB، أنواع مقبولة: jpeg,png,jpg,gif",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "facebook_link",
+							"value": "https://facebook.com/dr.fatima.alzahrani",
+							"description": "رابط فيسبوك - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "linkedin_link",
+							"value": "https://linkedin.com/in/dr-fatima-alzahrani",
+							"description": "رابط لينكد إن - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "instagram_link",
+							"value": "https://instagram.com/dr.fatima_pediatrics",
+							"description": "رابط إنستغرام - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "twitter_link",
+							"value": "https://twitter.com/dr_fatima_peds",
+							"description": "رابط تويتر - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "youtube_link",
+							"value": "https://youtube.com/c/DrFatimaPediatrics",
+							"description": "رابط يوتيوب - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "tiktok_link",
+							"value": "",
+							"description": "رابط تيك توك - اختياري",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "website_link",
+							"value": "https://dr-fatima-clinic.com",
+							"description": "رابط الموقع الإلكتروني - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[0][degree]",
+							"value": "بكالوريوس طب وجراحة",
+							"description": "الدرجة العلمية الأولى - مطلوب إذا تم إدخال تعليم",
+							"type": "text"
+						},
+						{
+							"key": "education[0][institution]",
+							"value": "الجامعة الأردنية - كلية الطب",
+							"description": "المؤسسة التعليمية الأولى - مطلوب إذا تم إدخال تعليم",
+							"type": "text"
+						},
+						{
+							"key": "education[0][field_of_study]",
+							"value": "الطب العام",
+							"description": "مجال الدراسة الأولى - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[0][start_year]",
+							"value": "2006",
+							"description": "سنة البدء للتعليم الأول - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[0][end_year]",
+							"value": "2012",
+							"description": "سنة التخرج للتعليم الأول - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[0][description]",
+							"value": "تخرجت بتقدير امتياز مع مرتبة الشرف، كنت من أوائل الدفعة",
+							"description": "وصف إضافي للتعليم الأول - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][degree]",
+							"value": "شهادة اختصاص طب أطفال",
+							"description": "الدرجة العلمية الثانية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][institution]",
+							"value": "المجلس الطبي الأردني",
+							"description": "المؤسسة التعليمية الثانية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][field_of_study]",
+							"value": "طب الأطفال",
+							"description": "مجال الدراسة الثانية - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][start_year]",
+							"value": "2013",
+							"description": "سنة البدء للتعليم الثاني - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][end_year]",
+							"value": "2017",
+							"description": "سنة التخرج للتعليم الثاني - اختياري",
+							"type": "text"
+						},
+						{
+							"key": "education[1][description]",
+							"value": "تدريب شامل في جميع أقسام طب الأطفال، تخصص فرعي في العناية المركزة",
+							"description": "وصف إضافي للتعليم الثاني - اختياري",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/candidates",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"candidates"
+					]
+				},
+				"description": "**وصف الـ API:**\nيقوم بإنشاء مرشح جديد في النظام مع جميع المعلومات المطلوبة والاختيارية، بما في ذلك الصور والمؤهلات العلمية.\n\n**الحقول المطلوبة (Required):**\n- `first_name`: الاسم الأول\n- `last_name`: الاسم الأخير\n- `email`: البريد الإلكتروني (يجب أن يكون فريد)\n- `password`: كلمة المرور (8 أحرف على الأقل)\n- `constituency_id`: معرف الدائرة الانتخابية\n- `party_bloc_name`: اسم الحزب/الكتلة\n- `phone`: رقم الهاتف\n- `biography`: السيرة الذاتية\n\n**الحقول الاختيارية (Optional):**\n- `list_number`: رقم القائمة\n- `current_position`: المنصب الحالي\n- `achievements`: الإنجازات\n- `additional_info`: معلومات إضافية\n- `experience`: الخبرة العملية\n- `skills`: المهارات\n- `campaign_slogan`: شعار الحملة\n- `voter_promises`: وعود للناخبين\n\n**رفع الصور:**\n- `profile_image`: صورة شخصية (حد أقصى 2MB)\n- `profile_banner_image`: صورة غلاف (حد أقصى 5MB)\n- الأنواع المقبولة: jpeg, png, jpg, gif\n\n**روابط التواصل الاجتماعي:**\n- `facebook_link`, `linkedin_link`, `instagram_link`\n- `twitter_link`, `youtube_link`, `tiktok_link`, `website_link`\n\n**المؤهلات العلمية (Education Array):**\nيمكن إضافة عدة مؤهلات علمية باستخدام الصيغة:\n```\neducation[0][degree] = \"بكالوريوس\"\neducation[0][institution] = \"الجامعة الأردنية\"\neducation[0][field_of_study] = \"هندسة\"\neducation[0][start_year] = 2020\neducation[0][end_year] = 2024\neducation[0][description] = \"وصف\"\n\neducation[1][degree] = \"ماجستير\"\n... وهكذا\n```\n\n**ملاحظات مهمة:**\n- استخدم `multipart/form-data` لرفع الصور\n- كلمة المرور سيتم تشفيرها تلقائياً\n- سيتم إنشاء حساب مستخدم جديد تلقائياً\n- المرشح سيكون نشط بشكل افتراضي\n- جميع العمليات تتم داخل transaction للأمان"
+			},
+			"response": [
+				{
+					"name": "استجابة ناجحة - Successful Creation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "فاطمة",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "أحمد الزهراني",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "fatima.alzahrani@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "constituency_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "party_bloc_name",
+									"value": "كتلة المرأة والشباب",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+962795432109",
+									"type": "text"
+								},
+								{
+									"key": "biography",
+									"value": "طبيبة أطفال مختصة بخبرة 12 سنة",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/candidates",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Candidate created successfully\",\n    \"data\": {\n        \"id\": 26,\n        \"user_id\": 26,\n        \"constituency_id\": 2,\n        \"party_bloc_name\": \"كتلة المرأة والشباب\",\n        \"phone\": \"+962795432109\",\n        \"biography\": \"طبيبة أطفال مختصة بخبرة 12 سنة، عملت في المستشفيات الحكومية والخاصة، ناشطة في مجال حقوق المرأة والطفل\",\n        \"list_number\": 3,\n        \"current_position\": \"رئيسة قسم طب الأطفال - مستشفى الملك حسين\",\n        \"achievements\": \"جائزة أفضل طبيبة أطفال 2022، رئيسة الجمعية الطبية النسائية\",\n        \"additional_info\": \"متطوعة في عدة جمعيات خيرية\",\n        \"experience\": \"12 سنة طبيبة أطفال، 5 سنوات في الإدارة الطبية\",\n        \"skills\": \"طب الأطفال، الإدارة الطبية، البحث العلمي\",\n        \"campaign_slogan\": \"صحة أطفالنا مسؤوليتنا جميعاً\",\n        \"voter_promises\": \"تطوير الخدمات الصحية للأطفال، إنشاء مراكز رعاية أمومة وطفولة\",\n        \"profile_image\": \"candidates/profile-images/1642156789_fatima_profile.jpg\",\n        \"profile_banner_image\": \"candidates/banner-images/1642156789_fatima_banner.jpg\",\n        \"facebook_link\": \"https://facebook.com/dr.fatima.alzahrani\",\n        \"linkedin_link\": \"https://linkedin.com/in/dr-fatima-alzahrani\",\n        \"instagram_link\": \"https://instagram.com/dr.fatima_pediatrics\",\n        \"twitter_link\": \"https://twitter.com/dr_fatima_peds\",\n        \"youtube_link\": \"https://youtube.com/c/DrFatimaPediatrics\",\n        \"tiktok_link\": null,\n        \"website_link\": \"https://dr-fatima-clinic.com\",\n        \"created_at\": \"2024-01-16T14:25:00.000000Z\",\n        \"updated_at\": \"2024-01-16T14:25:00.000000Z\",\n        \"user\": {\n            \"id\": 26,\n            \"first_name\": \"فاطمة\",\n            \"last_name\": \"أحمد الزهراني\",\n            \"email\": \"fatima.alzahrani@example.com\",\n            \"role\": \"candidate\",\n            \"is_active\": true,\n            \"email_verified_at\": \"2024-01-16T14:25:00.000000Z\",\n            \"created_at\": \"2024-01-16T14:25:00.000000Z\",\n            \"updated_at\": \"2024-01-16T14:25:00.000000Z\"\n        },\n        \"constituency\": {\n            \"id\": 2,\n            \"name\": \"الدائرة الثانية - إربد\",\n            \"description\": \"تشمل مناطق: إربد، الرمثا، المفرق\",\n            \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n            \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n        },\n        \"education\": [\n            {\n                \"id\": 15,\n                \"candidate_id\": 26,\n                \"degree\": \"بكالوريوس طب وجراحة\",\n                \"institution\": \"الجامعة الأردنية - كلية الطب\",\n                \"field_of_study\": \"الطب العام\",\n                \"start_year\": 2006,\n                \"end_year\": 2012,\n                \"description\": \"تخرجت بتقدير امتياز مع مرتبة الشرف\",\n                \"created_at\": \"2024-01-16T14:25:00.000000Z\",\n                \"updated_at\": \"2024-01-16T14:25:00.000000Z\"\n            },\n            {\n                \"id\": 16,\n                \"candidate_id\": 26,\n                \"degree\": \"شهادة اختصاص طب أطفال\",\n                \"institution\": \"المجلس الطبي الأردني\",\n                \"field_of_study\": \"طب الأطفال\",\n                \"start_year\": 2013,\n                \"end_year\": 2017,\n                \"description\": \"تدريب شامل في جميع أقسام طب الأطفال\",\n                \"created_at\": \"2024-01-16T14:25:00.000000Z\",\n                \"updated_at\": \"2024-01-16T14:25:00.000000Z\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "خطأ في التحقق - Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "invalid-email",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/candidates",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Validation failed\",\n    \"errors\": {\n        \"first_name\": [\n            \"First name is required\"\n        ],\n        \"last_name\": [\n            \"Last name is required\"\n        ],\n        \"email\": [\n            \"Email must be a valid email address\"\n        ],\n        \"password\": [\n            \"Password is required\"\n        ],\n        \"constituency_id\": [\n            \"Constituency is required\"\n        ],\n        \"party_bloc_name\": [\n            \"Party/bloc name is required\"\n        ],\n        \"phone\": [\n            \"Phone number is required\"\n        ],\n        \"biography\": [\n            \"Biography is required\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "3. عرض مرشح محدد - Get Single Candidate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "نوع البيانات المطلوب استلامها"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/candidates/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"candidates",
+						"1"
+					]
+				},
+				"description": "**وصف الـ API:**\nيسترجع تفاصيل مرشح واحد محدد بمعرفه الفريد.\n\n**المعاملات المطلوبة:**\n- `id`: معرف المرشح في الـ URL (رقم صحيح)\n\n**البيانات المُرجعة:**\n- جميع بيانات المرشح الشخصية والمهنية\n- بيانات المستخدم المرتبط (الاسم، البريد الإلكتروني، إلخ)\n- بيانات الدائرة الانتخابية\n- قائمة بجميع المؤهلات العلمية\n- روابط الصور والمواقع الاجتماعية\n\n**حالات الخطأ:**\n- 400: إذا لم يتم توفير معرف المرشح\n- 404: إذا لم يتم العثور على المرشح\n- 500: خطأ في الخادم\n\n**مثال على الاستخدام:**\n```\nGET /api/candidates/1  # للحصول على المرشح رقم 1\nGET /api/candidates/25 # للحصول على المرشح رقم 25\n```\n\n**ملاحظة:**\nيتم عرض المرشحين النشطين فقط (is_active = true)"
+			},
+			"response": [
+				{
+					"name": "استجابة ناجحة - Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/candidates/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 1,\n        \"user_id\": 1,\n        \"constituency_id\": 1,\n        \"party_bloc_name\": \"الحزب الديمقراطي الأردني\",\n        \"phone\": \"+962791234567\",\n        \"biography\": \"مهندس مدني خبرة 15 سنة في مجال البناء والتطوير العمراني، خدمت المجتمع المحلي من خلال مشاريع تطوعية متعددة. أؤمن بأهمية التطوير المستدام والعدالة الاجتماعية. عملت على تطوير العديد من المشاريع السكنية للأسر ذات الدخل المحدود.\",\n        \"list_number\": 1,\n        \"current_position\": \"مدير عام شركة الإنشاءات المتقدمة\",\n        \"achievements\": \"- تنفيذ أكثر من 50 مشروع سكني\\n- رئيس جمعية المهندسين المحلية\\n- جائزة أفضل مهندس لعام 2023\\n- إشراف على مشاريع بقيمة 100 مليون دينار\\n- تدريب أكثر من 200 مهندس شاب\",\n        \"additional_info\": \"عضو في عدة لجان استشارية حكومية، متحدث في مؤتمرات هندسية دولية، مؤلف كتاب عن التطوير العمراني المستدام\",\n        \"experience\": \"15 سنة في الهندسة المدنية، 5 سنوات في الإدارة التنفيذية، 10 سنوات في العمل التطوعي\",\n        \"skills\": \"إدارة المشاريع، التخطيط العمراني، القيادة، التفاوض، إدارة الفرق، التحليل المالي، استخدام برامج التصميم الهندسي\",\n        \"campaign_slogan\": \"معاً نبني مستقبل أفضل لأجيالنا القادمة\",\n        \"voter_promises\": \"- تطوير البنية التحتية في جميع المناطق\\n- دعم الشباب وتوفير فرص عمل\\n- تحسين الخدمات العامة\\n- مشاريع إسكان ميسرة\\n- تطوير التعليم والصحة\",\n        \"profile_image\": \"candidates/profile-images/ahmad_candidate_profile.jpg\",\n        \"profile_banner_image\": \"candidates/banner-images/ahmad_candidate_banner.jpg\",\n        \"facebook_link\": \"https://facebook.com/ahmad.candidate\",\n        \"linkedin_link\": \"https://linkedin.com/in/ahmad-engineer\",\n        \"instagram_link\": \"https://instagram.com/ahmad_candidate\",\n        \"twitter_link\": \"https://twitter.com/ahmad_candidate\",\n        \"youtube_link\": \"https://youtube.com/c/AhmadEngineer\",\n        \"tiktok_link\": null,\n        \"website_link\": \"https://ahmad-candidate.com\",\n        \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n        \"updated_at\": \"2024-01-15T12:45:00.000000Z\",\n        \"user\": {\n            \"id\": 1,\n            \"first_name\": \"أحمد\",\n            \"last_name\": \"محمد علي العبدالله\",\n            \"email\": \"ahmad.mohamed@example.com\",\n            \"role\": \"candidate\",\n            \"is_active\": true,\n            \"email_verified_at\": \"2024-01-15T10:30:00.000000Z\",\n            \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000000Z\"\n        },\n        \"constituency\": {\n            \"id\": 1,\n            \"name\": \"الدائرة الأولى - عمان\",\n            \"description\": \"تشمل مناطق: الدوار الأول، الدوار الثاني، وسط البلد، جبل عمان، الشميساني\",\n            \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n            \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n        },\n        \"education\": [\n            {\n                \"id\": 1,\n                \"candidate_id\": 1,\n                \"degree\": \"بكالوريوس هندسة مدنية\",\n                \"institution\": \"الجامعة الأردنية - كلية الهندسة والتكنولوجيا\",\n                \"field_of_study\": \"الهندسة المدنية والإنشائية\",\n                \"start_year\": 2005,\n                \"end_year\": 2009,\n                \"description\": \"تخرجت بتقدير جيد جداً، مشروع التخرج كان عن التصميم المستدام للمباني السكنية\",\n                \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n                \"updated_at\": \"2024-01-15T10:30:00.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"candidate_id\": 1,\n                \"degree\": \"ماجستير إدارة أعمال\",\n                \"institution\": \"جامعة الشرق الأوسط\",\n                \"field_of_study\": \"إدارة المشاريع والتطوير العقاري\",\n                \"start_year\": 2015,\n                \"end_year\": 2017,\n                \"description\": \"تخصص في إدارة المشاريع الكبرى والتطوير العقاري، أطروحة الماجستير كانت عن إدارة مشاريع الإسكان الاجتماعي\",\n                \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n                \"updated_at\": \"2024-01-15T10:30:00.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"candidate_id\": 1,\n                \"degree\": \"دبلوم عالي في القيادة التنفيذية\",\n                \"institution\": \"معهد الإدارة العامة\",\n                \"field_of_study\": \"القيادة والإدارة الاستراتيجية\",\n                \"start_year\": 2020,\n                \"end_year\": 2021,\n                \"description\": \"برنامج تدريبي متقدم للقادة التنفيذيين، ركز على التخطيط الاستراتيجي وإدارة التغيير\",\n                \"created_at\": \"2024-01-15T10:30:00.000000Z\",\n                \"updated_at\": \"2024-01-15T10:30:00.000000Z\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "مرشح غير موجود - Candidate Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/candidates/999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates",
+								"999"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Candidate not found\"\n}"
+				},
+				{
+					"name": "معرف مفقود - Missing ID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/candidates/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"candidates",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Candidate ID is required\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// هذا السكريبت يتم تنفيذه قبل كل طلب",
+					"// يمكن استخدامه لإضافة التوقيت أو المصادقة",
+					"",
+					"console.log('Sending request to: ' + pm.request.url);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// هذا السكريبت يتم تنفيذه بعد كل استجابة",
+					"// يمكن استخدامه للتحقق من صحة الاستجابة",
+					"",
+					"pm.test('Status code should be successful', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"pm.test('Response should be JSON', function () {",
+					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+					"});",
+					"",
+					"pm.test('Response should have success field', function () {",
+					"    const responseJson = pm.response.json();",
+					"    pm.expect(responseJson).to.have.property('success');",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"description": "الـ URL الأساسي للـ API - قم بتغييره حسب بيئة العمل"
+		}
+	]
+}

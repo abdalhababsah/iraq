@@ -188,7 +188,9 @@ class CandidatesImport implements ToCollection, WithHeadingRow
         $optionalColumns = [
             'password', 'list_number', 'current_position',
             'achievements', 'additional_info', 'experience', 'skills',
-            'campaign_slogan', 'voter_promises', 'is_active'
+            'campaign_slogan', 'voter_promises', 'is_active',
+            'facebook_link', 'linkedin_link', 'instagram_link', 'twitter_link',
+            'youtube_link', 'tiktok_link', 'website_link'
         ];
         
         foreach ($optionalColumns as $column) {
@@ -380,6 +382,13 @@ class CandidatesImport implements ToCollection, WithHeadingRow
             'skills' => $rowData['skills'] ?? null,
             'campaign_slogan' => $rowData['campaign_slogan'] ?? null,
             'voter_promises' => $rowData['voter_promises'] ?? null,
+            'facebook_link' => $rowData['facebook_link'] ?? null,
+            'linkedin_link' => $rowData['linkedin_link'] ?? null,
+            'instagram_link' => $rowData['instagram_link'] ?? null,
+            'twitter_link' => $rowData['twitter_link'] ?? null,
+            'youtube_link' => $rowData['youtube_link'] ?? null,
+            'tiktok_link' => $rowData['tiktok_link'] ?? null,
+            'website_link' => $rowData['website_link'] ?? null,
         ];
 
         if ($user->candidate) {

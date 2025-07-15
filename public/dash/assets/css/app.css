@@ -5357,7 +5357,7 @@ body[data-layout=horizontal] .chat-conversation {
   background-size: cover;
   background-repeat: no-repeat;
   margin: -24px -24px 23px -24px;
-  padding: 140px 0px;
+
   position: relative;
 }
 .profile-user:after {

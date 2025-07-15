@@ -376,7 +376,7 @@
 
                                 <div class="d-flex align-items-center pb-4">
                                     <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-5.jpg" class="img-fluid rounded-circle" alt="">
+                                        <img src="{{ asset('dash/assets/images/users/avatar-5.jpg') }}" class="img-fluid rounded-circle" alt="">
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Howard Rhoades</a></h5>
@@ -399,7 +399,7 @@
 
                                 <div class="d-flex align-items-center pb-4">
                                     <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-6.jpg" class="img-fluid rounded-circle" alt="">
+                                        <img src="{{ asset('dash/assets/images/users/avatar-6.jpg') }}" class="img-fluid rounded-circle" alt="">
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Arthur Zurcher</a></h5>
@@ -422,7 +422,7 @@
 
                                 <div class="d-flex align-items-center pb-4">
                                     <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-8.jpg" class="img-fluid rounded-circle" alt="">
+                                        <img src="{{ asset('dash/assets/images/users/avatar-8.jpg') }}" class="img-fluid rounded-circle" alt="">
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Angela Palmer</a></h5>
@@ -445,7 +445,7 @@
 
                                 <div class="d-flex align-items-center pb-3">
                                     <div class="avatar-md me-4">
-                                        <img src="./assets/images/users/avatar-9.jpg" class="img-fluid rounded-circle" alt="">
+                                        <img src="{{ asset('dash/assets/images/users/avatar-9.jpg') }}" class="img-fluid rounded-circle" alt="">
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5 class="font-size-15 mb-1"><a href="" class="text-dark">Dorothy Wimson</a></h5>

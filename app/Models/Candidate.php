@@ -30,6 +30,13 @@ class Candidate extends Model
         'voter_promises',
         'profile_image',
         'profile_banner_image',
+        'facebook_link',
+        'linkedin_link',
+        'instagram_link',
+        'twitter_link',
+        'youtube_link',
+        'tiktok_link',
+        'website_link',
     ];
 
     /**
