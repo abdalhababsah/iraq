@@ -25,7 +25,7 @@ class CandidateStoreRequest extends FormRequest
             // User fields
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email'],
             
             // Required candidate fields
             'constituency_id' => ['required', 'exists:constituencies,id'],
@@ -55,7 +55,7 @@ class CandidateStoreRequest extends FormRequest
             'youtube_link' => ['nullable', 'string', 'max:255'],
             'tiktok_link' => ['nullable', 'string', 'max:255'],
             'website_link' => ['nullable', 'string', 'max:255'],
-            
+            'serial_number' => ['required', 'string', 'max:255'],
             // Education (array of education records)
             'education' => ['nullable', 'array'],
             'education.*.degree' => ['required_with:education', 'string', 'max:255'],

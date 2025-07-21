@@ -37,6 +37,8 @@
         <link href="{{ asset('dash/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{ asset('dash/assets/css/app-rtl.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+        @stack('css')
+        @yield('css')
     </head>
 
 <body data-topbar="dark">
@@ -113,6 +115,8 @@
 
     <script src="{{ asset('dash/assets/js/app.js') }}"></script>
 
+    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

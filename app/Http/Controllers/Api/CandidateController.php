@@ -285,7 +285,7 @@ class CandidateController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password ?? '12345678'),
                 'role' => 'candidate',
-                'is_active' => true,
+                'is_active' => false,
                 'email_verified_at' => now(),
             ]);
 
@@ -301,6 +301,7 @@ class CandidateController extends Controller
                 'additional_info',
                 'experience',
                 'skills',
+                'serial_number',
                 'campaign_slogan',
                 'voter_promises',
                 'facebook_link',
@@ -311,6 +312,7 @@ class CandidateController extends Controller
                 'tiktok_link',
                 'website_link'
             ]);
+            // dd($candidateData);
 
             $candidateData['user_id'] = $user->id;
 

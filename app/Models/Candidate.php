@@ -37,6 +37,7 @@ class Candidate extends Model
         'youtube_link',
         'tiktok_link',
         'website_link',
+        'serial_number',
     ];
 
     /**
